@@ -1,9 +1,80 @@
+const fs = require("fs");
+const path = require("path");
+
+// --- BAGIAN PERBAIKAN ---
+// Kita baca file sebagai text dulu untuk membersihkan "NaN"
+const jsonPath = path.join(__dirname, "case3_population_weighted.json");
+let allPoints = [];
+
+try {
+  const rawText = fs.readFileSync(jsonPath, "utf8");
+  // Regex untuk mengganti ': NaN' (invalid) menjadi ': null' (valid)
+  const cleanText = rawText.replace(/:\s*NaN/g, ": null");
+  const jsonData = JSON.parse(cleanText);
+  allPoints = jsonData.points || [];
+} catch (error) {
+  console.error("Gagal memproses data JSON:", error.message);
+  allPoints = []; // Fallback agar tidak crash
+}
+
+// 2. Fungsi Helper: Sampling & Scaling
+function getProcessedData(data, sampleSize = 800) {
+  // FILTER PENTING: Hapus data yang null (bekas NaN tadi)
+  const validData = data.filter(
+    (p) => p.population != null && p.per_capita != null && p.households != null
+  );
+
+  if (validData.length === 0) return [];
+
+  // Ambil nilai max households untuk skala ukuran bubble
+  const maxHouseholds = Math.max(...validData.map((p) => p.households));
+
+  // Acak data (Shuffle)
+  const shuffled = validData.sort(() => 0.5 - Math.random());
+
+  // Ambil sebagian saja (slice)
+  const selected = shuffled.slice(0, sampleSize);
+
+  // Format sesuai kebutuhan Chart.js {x, y, r}
+  return selected.map((p) => ({
+    x: p.population,
+    y: parseFloat(p.per_capita.toFixed(6)),
+    // Skala radius: minimal 2px, maksimal 10px
+    r: (p.households / maxHouseholds) * 8 + 2,
+  }));
+}
+
+// Proses data
+const chartData = getProcessedData(allPoints);
+
 module.exports = {
-    "id": "case3",
-    "number": "Case Study 3",
-    "title": "Dampak Kelembapan pada Kesehatan Perumahan",
-    "icon": "fas fa-tint",
-    "visualTitle": "Tingkat Kelembapan 2025-2050",
-    "visualDesc": "Dampak kelembapan pada kesehatan perumahan",
-    "content": "<p>Analisis kelembapan (dampness) menunjukkan nilai yang relatif kecil namun konsisten selama periode 25 tahun. Area <strong>E01000001</strong> memiliki dampak kumulatif hanya <strong>0.001297</strong>.</p>\n        <div class=\"highlight\">\n            <div class=\"highlight-title\"><i class=\"fas fa-home\"></i><span>Insight Penting</span></div>\n            <p>Nilai kelembapan yang stabil dan rendah menunjukkan efektivitas standar bangunan dan regulasi ventilasi yang telah diterapkan di area perkotaan.</p>\n        </div>\n        <p>Data ini penting untuk mengalokasikan sumber daya perbaikan perumahan secara efektif, dengan fokus pada area yang memiliki nilai kelembapan lebih tinggi berdasarkan data lookup populasi dan rumah tangga.</p>"
+  id: "case3",
+  number: "Case Study 3",
+  title: "Siapa yang Paling Merasakan? (Dot Plot)",
+  icon: "fas fa-users",
+
+  visualTitle: "Distribusi Populasi",
+  visualDesc: "Kepadatan memperkuat dampak",
+
+  // Kirim data yang sudah diproses
+  chartData: chartData,
+
+  content: `
+        <p>Plot titik ini dibuat dari data nyata (sampled) yang dibaca langsung dari file JSON.</p>
+        
+        <div class="highlight">
+            <div class="highlight-title">
+                <i class="fas fa-bullseye"></i>
+                <span>Temuan Kunci</span>
+            </div>
+            <p>Terdapat korelasi positif yang kuat. Area dengan <strong>populasi lebih padat</strong> (diwakili oleh titik di sebelah kanan) cenderung menerima manfaat kualitas udara per kapita yang lebih tinggi.</p>
+        </div>
+
+        <p style="margin-top: 1rem;">
+            Ukuran titik merepresentasikan jumlah rumah tangga. Pola "awan" yang naik ke kanan atas menunjukkan bahwa kebijakan ini secara efektif menargetkan pusat-pusat populasi dimana intervensi paling dibutuhkan.
+        </p>
+        <p style="font-size: 0.8rem; color: #888; margin-top: 10px;">
+            *Menampilkan 800 sampel titik data dari total ${allPoints.length.toLocaleString()} area untuk performa optimal.
+        </p>
+    `,
 };

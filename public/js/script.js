@@ -98,6 +98,67 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // ... kode Case 2 sebelumnya ...
+
+  // --- LOGIKA KHUSUS CASE 3 (BUBBLE CHART LOG SCALE) ---
+  const case3Canvas = document.getElementById("case3Chart");
+  if (case3Canvas && typeof Chart !== "undefined") {
+    // Ambil data dari atribut data-points
+    const chartData = JSON.parse(case3Canvas.dataset.points);
+
+    new Chart(case3Canvas, {
+      type: "bubble",
+      data: {
+        datasets: [
+          {
+            label: "Area Kecil",
+            data: chartData,
+            backgroundColor: "rgba(26, 82, 118, 0.6)", // Primary Color Transparan
+            borderColor: "#1a5276",
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                return `Pop: ${context.raw.x}, Benefit: ${context.raw.y}`;
+              },
+            },
+          },
+        },
+        scales: {
+          x: {
+            type: "logarithmic", // Fitur kunci Case 3
+            title: {
+              display: false,
+              text: "Population (Log Scale)",
+            },
+            grid: {
+              display: false,
+            },
+          },
+          y: {
+            title: {
+              display: true,
+              text: "Benefit / Capita",
+            },
+            ticks: {
+              callback: function (value) {
+                return value.toFixed(5); // Format angka desimal kecil
+              },
+            },
+          },
+        },
+      },
+    });
+  }
+
   // Event Listeners
   dots.forEach((dot) => {
     dot.addEventListener("click", () => {
