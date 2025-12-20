@@ -159,6 +159,122 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // ... logika Case 3 sebelumnya ...
+
+    // --- LOGIKA KHUSUS CASE 4 (HORIZONTAL BAR CHART) ---
+    const case4Canvas = document.getElementById('case4Chart');
+    if (case4Canvas && typeof Chart !== 'undefined') {
+        const labels = JSON.parse(case4Canvas.dataset.labels);
+        const values = JSON.parse(case4Canvas.dataset.values);
+
+        new Chart(case4Canvas, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Total Value (£ Million)',
+                    data: values,
+                    backgroundColor: [
+                        '#1a5276', // Juara 1 (Gelap)
+                        '#2980b9',
+                        '#3498db',
+                        '#5dade2',
+                        '#85c1e9',
+                        '#aed6f1'  // Juara 6 (Terang)
+                    ],
+                    borderColor: '#154360',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y', // KUNCI: Membuat bar menjadi horizontal
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return '£ ' + context.parsed.x.toLocaleString();
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Total Value (£)'
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // ... logika Case 4 sebelumnya ...
+
+    // --- LOGIKA KHUSUS CASE 5 (BOXPLOT) ---
+    const case5Canvas = document.getElementById('case5Chart');
+    if (case5Canvas && typeof Chart !== 'undefined') {
+        try {
+            const rawData = case5Canvas.dataset.values;
+            const stats = JSON.parse(rawData);
+
+            new Chart(case5Canvas, {
+                type: 'boxplot',
+                data: {
+                    labels: ['Noise Benefits'],
+                    datasets: [{
+                        label: 'Statistik Distribusi',
+                        backgroundColor: 'rgba(231, 76, 60, 0.5)',
+                        borderColor: '#c0392b',
+                        borderWidth: 2,
+                        
+                        // --- SETTING AGAR OUTLIERS MUNCUL ---
+                        outlierColor: '#e74c3c',  // Warna titik merah
+                        outlierRadius: 3,         // Ukuran titik lebih besar
+                        itemRadius: 3,            // Ukuran item
+                        padding: 10,
+                        // ------------------------------------
+
+                        data: [stats] 
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y', 
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const r = context.raw;
+                                    return `Min: ${r.min.toFixed(2)} | Q1: ${r.q1.toFixed(2)} | Med: ${r.median.toFixed(2)} | Q3: ${r.q3.toFixed(2)} | Max: ${r.max.toFixed(2)}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Nilai Manfaat (£)' },
+                            min: 0
+                        }
+                    }
+                }
+            });
+        } catch (e) {
+            console.error("Gagal render Boxplot:", e);
+        }
+    }
+
   // Event Listeners
   dots.forEach((dot) => {
     dot.addEventListener("click", () => {

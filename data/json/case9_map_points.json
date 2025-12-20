@@ -1,0 +1,45 @@
+{
+  "case": "map_high_impact_areas",
+  "areas": [
+    {
+      "small_area": "E01000253",
+      "local_authority": "Barnet",
+      "nation": "Eng/Wales",
+      "sum": 90.152909015,
+      "lat": 51.650739117811845,
+      "lon": -0.2358125952362628
+    },
+    {
+      "small_area": "E01014714",
+      "local_authority": "Bristol, City of",
+      "nation": "Eng/Wales",
+      "sum": 88.497695694,
+      "lat": 51.479632165819936,
+      "lon": -2.6300875059646014
+    },
+    {
+      "small_area": "E01023839",
+      "local_authority": "Three Rivers",
+      "nation": "Eng/Wales",
+      "sum": 88.764801827,
+      "lat": 51.623348433833534,
+      "lon": -0.4243541679600141
+    },
+    {
+      "small_area": "E01030831",
+      "local_authority": "Tandridge",
+      "nation": "Eng/Wales",
+      "sum": 87.722893247,
+      "lat": 51.26439320884438,
+      "lon": 0.003612099759721527
+    },
+    {
+      "small_area": "W01002002",
+      "local_authority": "Ceredigion",
+      "nation": "Eng/Wales",
+      "sum": 141.962076776,
+      "lat": 52.1661318015609,
+      "lon": -4.3132653588177625
+    }
+  ]
+}

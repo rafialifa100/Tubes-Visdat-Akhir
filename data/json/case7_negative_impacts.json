@@ -1,0 +1,21 @@
+{
+  "case": "negative_impacts",
+  "items": [
+    {
+      "co-benefit_type": "road_repairs",
+      "sum": -327.174916846
+    },
+    {
+      "co-benefit_type": "road_safety",
+      "sum": -2429.884055286
+    },
+    {
+      "co-benefit_type": "congestion",
+      "sum": -7623.782006454
+    },
+    {
+      "co-benefit_type": "hassle_costs",
+      "sum": -70842.515873756
+    }
+  ]
+}

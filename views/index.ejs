@@ -1,172 +1,163 @@
 <!DOCTYPE html>
 <html lang="id">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Analisis Co-Benefit Area Kecil 2025-2050</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="/css/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
-  <body>
+    <!-- Tambahan plugin untuk box plot -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@sgratzl/chartjs-chart-boxplot@3.6.0/build/index.umd.min.js"></script>
+</head>
+<body>
     <div class="nav-container">
-      <nav>
-        <div class="logo">
-          <i class="fas fa-chart-line"></i>
-          <span>Co-Benefit Analysis</span>
-        </div>
-        <div class="nav-links">
-          <a href="#home">Home</a>
-          <a href="#case1">Case 1</a>
-          <a href="#case5">Case 5</a>
-          <a href="#case10">Case 10</a>
-        </div>
-      </nav>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <span>Co-Benefit Analysis</span>
+            </div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#case1">Case 1</a>
+                <a href="#case5">Case 5</a>
+                <a href="#case10">Case 10</a>
+            </div>
+        </nav>
     </div>
 
     <div class="nav-dots">
-      <div class="dot active" data-label="Home" data-target="home"></div>
-      <% cases.forEach(function(item) { %>
-      <div
-        class="dot"
-        data-label="<%= item.number %>"
-        data-target="<%= item.id %>"
-      ></div>
-      <% }); %>
+        <div class="dot active" data-label="Home" data-target="home"></div>
+        <% cases.forEach(function(item) { %>
+            <div class="dot" data-label="<%= item.number %>" data-target="<%= item.id %>"></div>
+        <% }); %>
     </div>
 
     <section class="hero" id="home">
-      <h1 class="fade-in">Analisis Co-Benefit Area Kecil</h1>
-      <p class="subtitle fade-in">2025 - 2050</p>
-      <p class="fade-in">
-        Visualisasi interaktif dari 10 studi kasus berdasarkan data level 2,
-        shapefile, dan lookup untuk memahami dampak kebijakan lingkungan di area
-        kecil Inggris dan Wales.
-      </p>
-      <div class="scroll-indicator">
-        <span>Scroll untuk menjelajahi</span>
-        <i class="fas fa-chevron-down"></i>
-      </div>
+        <h1 class="fade-in">Analisis Co-Benefit Area Kecil</h1>
+        <p class="subtitle fade-in">2025 - 2050</p>
+        <p class="fade-in">
+            Visualisasi interaktif dari 10 studi kasus berdasarkan data level 2,
+            shapefile, dan lookup untuk memahami dampak kebijakan lingkungan di area
+            kecil Inggris dan Wales.
+        </p>
+        <div class="scroll-indicator">
+            <span>Scroll untuk menjelajahi</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
     </section>
 
     <div class="case-container">
-      <% cases.forEach(function(item, index) { let isEven = index % 2 === 0; let
-      textAnim = isEven ? 'slide-in-left' : 'slide-in-right'; let visualAnim =
-      isEven ? 'slide-in-right' : 'slide-in-left'; %>
-      <section class="case-section" id="<%= item.id %>">
-        <div class="case-number"><%= item.number %></div>
-        <h2 class="case-title"><%= item.title %></h2>
+        <% cases.forEach(function(item, index) { 
+            let isEven = index % 2 === 0;
+            let textAnim = isEven ? 'slide-in-left' : 'slide-in-right';
+            let visualAnim = isEven ? 'slide-in-right' : 'slide-in-left';
+        %>
+        <section class="case-section" id="<%= item.id %>">
+            <div class="case-number"><%= item.number %></div>
+            <h2 class="case-title"><%= item.title %></h2>
 
-        <div class="case-content">
-          <% if (isEven) { %>
-          <div class="case-text <%= textAnim %>"><%- item.content %></div>
-          <div class="case-visual <%= visualAnim %>">
-            <% if (item.id === 'case3' && item.chartData) { %>
-            <div
-              class="chart-wrapper"
-              style="
-                width: 90%;
-                height: 90%;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-              "
-            >
-              <h3 style="color: #1a5276; margin-bottom: 10px">
-                <%= item.visualTitle %>
-              </h3>
-              <div style="position: relative; height: 300px; width: 100%">
-                <canvas
-                  id="case3Chart"
-                  data-points="<%= JSON.stringify(item.chartData) %>"
-                ></canvas>
-              </div>
-              <p style="font-size: 0.8rem; color: #666; margin-top: 5px">
-                Sumbu X: Populasi (Log Scale)
-              </p>
+            <div class="case-content">
+                <% if (isEven) { %>
+                    <div class="case-text <%= textAnim %>">
+                        <%- item.content %>
+                    </div>
+                    
+                    <div class="case-visual <%= visualAnim %>">
+                        <% if (item.id === 'case3' && item.chartData) { %>
+                            <div class="chart-wrapper" style="width: 90%; height: 90%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <h3 style="color: #1a5276; margin-bottom: 10px;"><%= item.visualTitle %></h3>
+                                <div style="position: relative; height:300px; width:100%;">
+                                    <canvas id="case3Chart" data-points="<%= JSON.stringify(item.chartData) %>"></canvas>
+                                </div>
+                                <p style="font-size:0.8rem; color:#666; margin-top:5px;">Sumbu X: Populasi (Log Scale)</p>
+                            </div>
+
+                        <% } else if (item.id === 'case5' && item.chartData) { %>
+                            <div class="chart-wrapper" style="width: 90%; height: 90%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <h3 style="color: #1a5276; margin-bottom: 15px;"><%= item.visualTitle %></h3>
+                                <div style="position: relative; height:300px; width:100%;">
+                                    <canvas id="case5Chart" 
+                                        data-values='<%- JSON.stringify(item.chartData) %>'
+                                    ></canvas>
+                                </div>
+                                <p style="font-size:0.8rem; color:#666; margin-top:5px;">Statistik: Min, Q1, Median, Q3, Max</p>
+                            </div>
+
+                        <% } else { %>
+                            <div class="visual-placeholder">
+                                <i class="<%= item.icon %>"></i>
+                                <h3><%= item.visualTitle %></h3>
+                                <p><%= item.visualDesc %></p>
+                            </div>
+                        <% } %>
+                    </div>
+
+                <% } else { %>
+                    <div class="case-visual <%= visualAnim %>">
+                        
+                        <% if (item.id === 'case2') { %>
+                            <div class="chart-wrapper" style="width: 90%; height: 90%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <h3 style="color: #1a5276; margin-bottom: 15px;"><%= item.visualTitle %></h3>
+                                <div style="position: relative; height:300px; width:100%;">
+                                    <canvas id="case2Chart" 
+                                        data-years='[2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041,2042,2043,2044,2045,2046,2047,2048,2049,2050]'
+                                        data-values='[172.41, 408.28, 706.55, 1078.46, 1535.26, 2112.43, 2820.96, 3714.40, 4812.46, 6111.23, 7632.57, 9362.94, 11297.18, 13428.78, 15746.93, 18241.06, 20886.02, 23668.27, 26571.26, 29577.09, 32667.16, 35806.77, 38950.41, 42074.37, 45177.08, 48259.41]'
+                                    ></canvas>
+                                </div>
+                            </div>
+
+                        <% } else if (item.id === 'case4' && item.chartData) { %>
+                            <div class="chart-wrapper" style="width: 90%; height: 90%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <h3 style="color: #1a5276; margin-bottom: 15px;"><%= item.visualTitle %></h3>
+                                <div style="position: relative; height:300px; width:100%;">
+                                    <canvas id="case4Chart" 
+                                        data-labels="<%= JSON.stringify(item.chartData.labels) %>"
+                                        data-values="<%= JSON.stringify(item.chartData.values) %>"
+                                    ></canvas>
+                                </div>
+                            </div>
+
+                        <% } else { %>
+                            <div class="visual-placeholder">
+                                <i class="<%= item.icon %>"></i>
+                                <h3><%= item.visualTitle %></h3>
+                                <p><%= item.visualDesc %></p>
+                            </div>
+                        <% } %>
+
+                    </div>
+                    <div class="case-text <%= textAnim %>">
+                        <%- item.content %>
+                    </div>
+                <% } %>
             </div>
-            <% } else { %>
-            <div class="visual-placeholder">
-              <i class="<%= item.icon %>"></i>
-              <h3><%= item.visualTitle %></h3>
-              <p><%= item.visualDesc %></p>
-            </div>
-            <% } %>
-          </div>
-          <% } else { %>
-          <div class="case-visual <%= visualAnim %>">
-            <% if (item.id === 'case2') { %>
-            <div
-              class="chart-wrapper"
-              style="
-                width: 90%;
-                height: 90%;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-              "
-            >
-              <h3 style="color: #1a5276; margin-bottom: 15px">
-                <%= item.visualTitle %>
-              </h3>
-              <div style="position: relative; height: 300px; width: 100%">
-                <canvas
-                  id="case2Chart"
-                  data-years="[2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041,2042,2043,2044,2045,2046,2047,2048,2049,2050]"
-                  data-values="[172.41, 408.28, 706.55, 1078.46, 1535.26, 2112.43, 2820.96, 3714.40, 4812.46, 6111.23, 7632.57, 9362.94, 11297.18, 13428.78, 15746.93, 18241.06, 20886.02, 23668.27, 26571.26, 29577.09, 32667.16, 35806.77, 38950.41, 42074.37, 45177.08, 48259.41]"
-                ></canvas>
-              </div>
-            </div>
-            <% } else { %>
-            <div class="visual-placeholder">
-              <i class="<%= item.icon %>"></i>
-              <h3><%= item.visualTitle %></h3>
-              <p><%= item.visualDesc %></p>
-            </div>
-            <% } %>
-          </div>
-          <div class="case-text <%= textAnim %>"><%- item.content %></div>
-          <% } %>
-        </div>
-      </section>
-      <% }); %>
+        </section>
+        <% }); %>
     </div>
 
     <footer>
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3>Tentang Analisis Ini</h3>
-          <p>
-            Visualisasi interaktif ini didasarkan pada analisis data co-benefit
-            area kecil di Inggris dan Wales untuk periode 2025-2050.
-          </p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Tentang Analisis Ini</h3>
+                <p>Visualisasi interaktif ini didasarkan pada analisis data co-benefit area kecil di Inggris dan Wales untuk periode 2025-2050.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Metodologi</h3>
+                <p>Analisis dilakukan menggunakan Python dengan library Pandas, GeoPandas, dan Matplotlib untuk pemrosesan data dan visualisasi awal.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Kontak</h3>
+                <p>Visualisasi ini dibuat untuk tujuan edukasi dan perencanaan kebijakan berbasis bukti.</p>
+            </div>
         </div>
-        <div class="footer-section">
-          <h3>Metodologi</h3>
-          <p>
-            Analisis dilakukan menggunakan Python dengan library Pandas,
-            GeoPandas, dan Matplotlib untuk pemrosesan data dan visualisasi
-            awal.
-          </p>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Analisis Co-Benefit Area Kecil.</p>
         </div>
-        <div class="footer-section">
-          <h3>Kontak</h3>
-          <p>
-            Visualisasi ini dibuat untuk tujuan edukasi dan perencanaan
-            kebijakan berbasis bukti.
-          </p>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2025 Analisis Co-Benefit Area Kecil.</p>
-      </div>
     </footer>
 
     <script src="/js/script.js"></script>
-  </body>
+    
+</body>
 </html>

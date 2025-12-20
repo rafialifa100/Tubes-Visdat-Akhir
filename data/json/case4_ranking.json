@@ -1,0 +1,49 @@
+{
+  "case": "ranked_cobenefits",
+  "ranking": [
+    {
+      "co-benefit_type": "physical_activity",
+      "sum": 129879.193587864
+    },
+    {
+      "co-benefit_type": "air_quality",
+      "sum": 48259.408723722
+    },
+    {
+      "co-benefit_type": "noise",
+      "sum": 34207.74611001
+    },
+    {
+      "co-benefit_type": "excess_cold",
+      "sum": 8801.601831185
+    },
+    {
+      "co-benefit_type": "diet_change",
+      "sum": 5054.870250856
+    },
+    {
+      "co-benefit_type": "dampness",
+      "sum": 641.798414761
+    },
+    {
+      "co-benefit_type": "excess_heat",
+      "sum": 0.110508653
+    },
+    {
+      "co-benefit_type": "road_repairs",
+      "sum": -327.174916846
+    },
+    {
+      "co-benefit_type": "road_safety",
+      "sum": -2429.884055286
+    },
+    {
+      "co-benefit_type": "congestion",
+      "sum": -7623.782006454
+    },
+    {
+      "co-benefit_type": "hassle_costs",
+      "sum": -70842.515873756
+    }
+  ]
+}

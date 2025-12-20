@@ -3,7 +3,8 @@ const path = require("path");
 
 // --- BAGIAN PERBAIKAN ---
 // Kita baca file sebagai text dulu untuk membersihkan "NaN"
-const jsonPath = path.join(__dirname, "case3_population_weighted.json");
+// Tambahkan 'json' agar masuk ke folder tersebut
+const jsonPath = path.join(__dirname, 'json', 'case3_population_weighted.json');
 let allPoints = [];
 
 try {
@@ -18,7 +19,7 @@ try {
 }
 
 // 2. Fungsi Helper: Sampling & Scaling
-function getProcessedData(data, sampleSize = 800) {
+function getProcessedData(data, sampleSize = 20000) {
   // FILTER PENTING: Hapus data yang null (bekas NaN tadi)
   const validData = data.filter(
     (p) => p.population != null && p.per_capita != null && p.households != null
