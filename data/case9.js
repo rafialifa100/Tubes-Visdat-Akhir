@@ -1,9 +1,22 @@
 module.exports = {
     "id": "case9",
     "number": "Case Study 9",
-    "title": "Identifikasi Area Prioritas untuk Intervensi Kebijakan",
-    "icon": "fas fa-bullseye",
-    "visualTitle": "Peta Prioritas Intervensi",
-    "visualDesc": "Identifikasi area untuk intervensi berbasis data",
-    "content": "<p>Berdasarkan analisis gabungan dari data level 2, lookup, dan shapefile, kita dapat mengidentifikasi area prioritas untuk berbagai jenis intervensi kebijakan:</p>\n        <table class=\"data-table\">\n            <thead><tr><th>Jenis Intervensi</th><th>Area Prioritas</th><th>Indikator Kunci</th></tr></thead>\n            <tbody>\n                <tr><td>Kualitas Udara</td><td>Pusat Kota</td><td>Kepadatan tinggi</td></tr>\n                <tr><td>Kemacetan</td><td>Koridor Transportasi</td><td>Pola komuter</td></tr>\n                <tr><td>Kesehatan Perumahan</td><td>Perumahan Tua</td><td>Tahun konstruksi</td></tr>\n                <tr><td>Program Diet</td><td>Akses Terbatas</td><td>Jarak ke market</td></tr>\n            </tbody>\n        </table>\n        <div class=\"highlight\">\n            <div class=\"highlight-title\"><i class=\"fas fa-bullseye\"></i><span>Strategi Penargetan</span></div>\n            <p>Data menunjukkan bahwa pendekatan \"satu ukuran untuk semua\" tidak efektif. Intervensi harus ditargetkan berdasarkan karakteristik spesifik area.</p>\n        </div>"
+    "title": "Peta Sebaran Dampak (High Impact Areas)",
+    "icon": "fas fa-map-marked-alt",
+    "visualTitle": "5 Area dengan Dampak Tertinggi",
+    "visualDesc": "Lingkaran hijau menunjukkan besaran akumulasi benefit",
+    "content": `<p>Pertanyaan: <em>"Di mana dampak terbesar terjadi?"</em></p>
+        <p>Analisis geospasial mengidentifikasi "hotspots" atau titik panas di mana intervensi memberikan hasil maksimal. Peta di samping menyoroti 5 area teratas (Top 5 Small Areas).</p>
+        <div class="highlight" style="border-left-color: #2e7d32; background-color: rgba(46, 125, 50, 0.1);">
+            <div class="highlight-title" style="color: #2e7d32;"><i class="fas fa-globe-europe"></i><span>Top Performer: Ceredigion (Wales)</span></div>
+            <p>Area <strong>W01002002</strong> di Ceredigion mencatat total co-benefit tertinggi sebesar <strong>£141.9 Juta</strong>. Area lain yang signifikan meliputi Barnet, Three Rivers, Bristol, dan Tandridge.</p>
+        </div>
+        <p>Informasi spasial ini krusial untuk <em>Place-Based Policy</em>, memastikan sumber daya dialokasikan ke lokasi yang paling responsif terhadap intervensi.</p>`,
+    "chartData": [
+        { "small_area": "W01002002", "local_authority": "Ceredigion", "sum": 141.96, "lat": 52.1661, "lon": -4.3133 },
+        { "small_area": "E01000253", "local_authority": "Barnet", "sum": 90.15, "lat": 51.6507, "lon": -0.2358 },
+        { "small_area": "E01023839", "local_authority": "Three Rivers", "sum": 88.76, "lat": 51.6233, "lon": -0.4244 },
+        { "small_area": "E01014714", "local_authority": "Bristol", "sum": 88.50, "lat": 51.4796, "lon": -2.6301 },
+        { "small_area": "E01030831", "local_authority": "Tandridge", "sum": 87.72, "lat": 51.2644, "lon": 0.0036 }
+    ]
 };
