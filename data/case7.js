@@ -1,9 +1,18 @@
 module.exports = {
     "id": "case7",
     "number": "Case Study 7",
-    "title": "Korelasi antara Kepadatan Populasi dan Dampak Co-Benefit",
-    "icon": "fas fa-map-marked-alt",
-    "visualTitle": "Peta Kepadatan dan Dampak",
-    "visualDesc": "Visualisasi korelasi spasial populasi dan co-benefit",
-    "content": "<p>Dengan menggabungkan data level 2 dengan data lookup (populasi dan rumah tangga), kita dapat menganalisis korelasi antara kepadatan populasi dan efektivitas berbagai kebijakan co-benefit.</p>\n        <div class=\"highlight\">\n            <div class=\"highlight-title\"><i class=\"fas fa-users\"></i><span>Temuan Utama</span></div>\n            <p>Area dengan kepadatan populasi tinggi (seperti City of London) menunjukkan respons lebih baik terhadap kebijakan kualitas udara dan transportasi.</p>\n        </div>\n        <p>Analisis spatial menggunakan shapefile mengungkapkan pola kluster di mana area dengan karakteristik demografis serupa menunjukkan pola dampak co-benefit yang mirip.</p>"
+    "title": "Dampak Negatif & Trade-Offs",
+    "icon": "fas fa-exclamation-triangle", // Icon peringatan
+    "visualTitle": "Analisis Dampak Negatif (Trade-Offs)",
+    "visualDesc": "Visualisasi biaya dan dampak negatif kebijakan",
+    "content": `<p>Tidak semua dampak kebijakan bersifat positif. Analisis ini menyoroti <strong>Trade-Offs</strong> atau dampak negatif yang muncul dari implementasi kebijakan.</p>
+        <div class="highlight" style="border-left-color: #e74c3c; background-color: rgba(231, 76, 60, 0.1);">
+            <div class="highlight-title" style="color: #c0392b;"><i class="fas fa-arrow-down"></i><span>Biaya Terbesar</span></div>
+            <p><strong>Hassle Costs</strong> (Biaya kerumitan/ketidaknyamanan) menjadi faktor negatif terbesar dengan nilai kumulatif mencapai <strong>-£70.8 Juta</strong>. Ini seringkali mencakup waktu tunggu, ketidaknyamanan rute, atau biaya transisi teknologi.</p>
+        </div>
+        <p>Identifikasi dampak negatif ini krusial untuk mitigasi risiko dan merancang skema kompensasi agar kebijakan tetap diterima masyarakat.</p>`,
+    "chartData": {
+        "labels": ["Hassle Costs", "Congestion", "Road Safety", "Road Repairs"],
+        "values": [-70842.515873756, -7623.782006454, -2429.884055286, -327.174916846]
+    }
 };
