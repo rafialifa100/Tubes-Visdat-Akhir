@@ -15,4 +15,4 @@ module.exports = {
         "labels": ["Hassle Costs", "Congestion", "Road Safety", "Road Repairs"],
         "values": [-70842.515873756, -7623.782006454, -2429.884055286, -327.174916846]
     }
-};
+}; 
