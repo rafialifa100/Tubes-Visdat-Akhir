@@ -318,3 +318,70 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+// --- LOGIKA KHUSUS CASE 7 (NEGATIVE BAR CHART) ---
+    const case7Canvas = document.getElementById('case7Chart');
+    if (case7Canvas && typeof Chart !== 'undefined') {
+        const labels = JSON.parse(case7Canvas.dataset.labels);
+        const values = JSON.parse(case7Canvas.dataset.values);
+
+        new Chart(case7Canvas, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Negative Impact (£ Million)',
+                    data: values,
+                    backgroundColor: 'rgba(231, 76, 60, 0.6)', // Merah Transparan
+                    borderColor: '#c0392b', // Merah Solid
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y', // Horizontal Bar
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return new Intl.NumberFormat('en-GB', {
+                                    style: 'currency', 
+                                    currency: 'GBP'
+                                }).format(context.raw) + ' Million';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Nilai Dampak (£ Million)'
+                        },
+                        // Memastikan sumbu X mengakomodasi nilai negatif
+                        suggestedMin: Math.min(...values) * 1.1, 
+                        grid: {
+                            color: function(context) {
+                                // Highlight garis 0 agar jelas perbatasannya
+                                if (context.tick.value === 0) {
+                                    return '#333';
+                                }
+                                return 'rgba(0,0,0,0.1)';
+                            },
+                            lineWidth: function(context) {
+                                if (context.tick.value === 0) {
+                                    return 2;
+                                }
+                                return 1;
+                            }
+                        }
+                    },
+                    y: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    }
