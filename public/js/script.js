@@ -511,3 +511,62 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+// --- LOGIKA KHUSUS CASE 10 (TOTAL COMPOSITION) ---
+    const case10Canvas = document.getElementById('case10Chart');
+    if (case10Canvas && typeof Chart !== 'undefined') {
+        const labels = JSON.parse(case10Canvas.dataset.labels);
+        const values = JSON.parse(case10Canvas.dataset.values);
+
+        // Pewarnaan dinamis: Hijau jika positif, Merah jika negatif
+        const colors = values.map(v => v >= 0 ? '#27ae60' : '#c0392b');
+
+        new Chart(case10Canvas, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Value (£ Million)',
+                    data: values,
+                    backgroundColor: colors,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return new Intl.NumberFormat('en-GB', {
+                                    style: 'currency', currency: 'GBP'
+                                }).format(context.raw) + ' Million';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            font: { size: 10 },
+                            autoSkip: false, // Tampilkan semua label
+                            maxRotation: 45, // Miringkan label agar muat
+                            minRotation: 45
+                        },
+                        grid: { display: false }
+                    },
+                    y: {
+                        title: { display: true, text: '£ Million' },
+                        grid: { color: '#f0f0f0' },
+                        // Garis 0 (Zero Line) yang tebal untuk memisahkan positif/negatif
+                        grid: {
+                            lineWidth: context => context.tick.value === 0 ? 2 : 1,
+                            color: context => context.tick.value === 0 ? '#333' : 'rgba(0,0,0,0.1)'
+                        }
+                    }
+                }
+            }
+        });
+    }
