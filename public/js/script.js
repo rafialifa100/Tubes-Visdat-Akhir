@@ -570,3 +570,56 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+// --- LOGIKA KHUSUS CASE 9 (LEAFLET MAP) ---
+    const mapContainer = document.getElementById('case9Map');
+    if (mapContainer && typeof L !== 'undefined') {
+        const points = JSON.parse(mapContainer.dataset.points);
+
+        // 1. Inisialisasi Peta (Center awal di UK)
+        const map = L.map('case9Map').setView([52.5, -1.5], 6);
+
+        // 2. Tambahkan Tile Layer (Peta Dasar OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // 3. Cari nilai maksimum untuk skala radius
+        const maxVal = Math.max(...points.map(p => p.sum));
+        const bounds = []; // Untuk auto-zoom agar semua titik terlihat
+
+        // 4. Loop data points dan gambar lingkaran
+        points.forEach(p => {
+            // Logika radius dari Python: base + scale * (val / max)
+            // Di JS kita sesuaikan sedikit agar pas di layar
+            const radius = 10000 + 30000 * (p.sum / maxVal); 
+
+            const circle = L.circle([p.lat, p.lon], {
+                color: '#2E7D32',      // Border Hijau Gelap
+                fillColor: '#66BB6A',  // Fill Hijau Terang
+                fillOpacity: 0.6,
+                radius: radius,
+                weight: 2
+            }).addTo(map);
+
+            // Tambahkan Popup Informasi
+            circle.bindPopup(`
+                <div style="text-align:center;">
+                    <strong style="color:#2E7D32; font-size:1.1em;">High Impact Area</strong><br>
+                    <span style="font-size:0.9em; color:#666;">${p.local_authority}</span><br>
+                    <hr style="margin:5px 0; border:0; border-top:1px solid #eee;">
+                    <strong>£ ${p.sum.toFixed(2)} Million</strong>
+                </div>
+            `);
+
+            bounds.push([p.lat, p.lon]);
+        });
+
+        // 5. Fit Peta agar memuat semua titik
+        if (bounds.length > 0) {
+            map.fitBounds(bounds, { padding: [50, 50] });
+        }
+        
+        // Fix untuk render peta saat resize/load dalam tab tersembunyi
+        setTimeout(() => { map.invalidateSize(); }, 500);
+    }
