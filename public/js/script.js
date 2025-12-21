@@ -319,6 +319,68 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// --- LOGIKA KHUSUS CASE 6 (MULTI-LINE CHART) ---
+    const case6Canvas = document.getElementById('case6Chart');
+    if (case6Canvas && typeof Chart !== 'undefined') {
+        const rawSeries = JSON.parse(case6Canvas.dataset.series);
+        
+        // Ambil label tahun dari salah satu kota (misal Birmingham)
+        const years = Object.keys(rawSeries['Birmingham']);
+        
+        // Warna untuk setiap kota
+        const colors = ['#3498db', '#e67e22', '#2ecc71', '#e74c3c', '#9b59b6'];
+        
+        // Buat dataset
+        const datasets = Object.keys(rawSeries).map((city, index) => {
+            return {
+                label: city,
+                data: Object.values(rawSeries[city]),
+                borderColor: colors[index % colors.length],
+                backgroundColor: colors[index % colors.length],
+                borderWidth: 2,
+                tension: 0.4, // Kurva halus
+                pointRadius: 3,
+                fill: false
+            };
+        });
+
+        new Chart(case6Canvas, {
+            type: 'line',
+            data: {
+                labels: years,
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { boxWidth: 10, usePointStyle: true, font: { size: 10 } }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label}: £ ${context.raw.toFixed(4)} M`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: { display: true, text: 'Benefit (£ Million)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    }
+
 // --- LOGIKA KHUSUS CASE 7 (NEGATIVE BAR CHART) ---
     const case7Canvas = document.getElementById('case7Chart');
     if (case7Canvas && typeof Chart !== 'undefined') {
