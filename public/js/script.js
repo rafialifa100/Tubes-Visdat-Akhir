@@ -385,3 +385,67 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+// --- LOGIKA KHUSUS CASE 8 (SLOPE GRAPH) ---
+    const case8Canvas = document.getElementById('case8Chart');
+    if (case8Canvas && typeof Chart !== 'undefined') {
+        const rawData = JSON.parse(case8Canvas.dataset.slope);
+        
+        // Warna-warni untuk membedakan setiap garis (Palet warna distingtif)
+        const colors = [
+            '#e74c3c', '#8e44ad', '#3498db', '#1abc9c', 
+            '#f1c40f', '#e67e22', '#2ecc71', '#34495e', '#95a5a6'
+        ];
+
+        // Transformasi data: Setiap item menjadi 1 dataset (garis)
+        const datasets = rawData.map((item, index) => ({
+            label: item.type,
+            data: [item['2025'], item['2050']],
+            borderColor: colors[index % colors.length],
+            backgroundColor: colors[index % colors.length],
+            tension: 0,       // Garis lurus (slope)
+            borderWidth: 2,
+            pointRadius: 6,   // Titik besar di ujung
+            pointHoverRadius: 8
+        }));
+
+        new Chart(case8Canvas, {
+            type: 'line',
+            data: {
+                labels: ['2025', '2050'], // Hanya 2 label X-axis
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right', // Legend di kanan agar tidak menumpuk
+                        labels: { boxWidth: 10, font: { size: 10 } }
+                    },
+                    tooltip: {
+                        mode: 'dataset',
+                        intersect: false,
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.dataset.label}: £ ${context.raw.toLocaleString()} M`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        title: { display: true, text: 'Value (£ Million)' },
+                        grid: { color: '#f0f0f0' } // Grid tipis
+                    },
+                    x: {
+                        offset: true, // Memberi jarak di kiri/kanan agar titik tidak terpotong
+                        grid: {
+                            display: false, // Hilangkan grid vertikal tengah
+                            drawBorder: true
+                        }
+                    }
+                }
+            }
+        });
+    }
