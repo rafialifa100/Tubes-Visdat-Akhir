@@ -153,6 +153,18 @@
                                 <p style="font-size:0.8rem; color:#666; margin-top:5px;">Kiri: 2025 (Short Term) • Kanan: 2050 (Long Term)</p>
                             </div>
 
+                        <% } else if (item.id === 'case10' && item.chartData) { %>
+                            <div class="chart-wrapper" style="width: 90%; height: 90%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <h3 style="color: #1a5276; margin-bottom: 15px;"><%= item.visualTitle %></h3>
+                                <div style="position: relative; height:300px; width:100%;">
+                                    <canvas id="case10Chart" 
+                                        data-labels="<%= JSON.stringify(item.chartData.labels) %>"
+                                        data-values="<%= JSON.stringify(item.chartData.values) %>"
+                                    ></canvas>
+                                </div>
+                                <p style="font-size:0.8rem; color:#666; margin-top:5px;">Hijau = Benefit (+) | Merah = Cost (-)</p>
+                            </div>
+
                         <% } else { %>
                             <div class="visual-placeholder">
                                 <i class="<%= item.icon %>"></i>
