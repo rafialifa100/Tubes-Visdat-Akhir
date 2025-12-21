@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analisis Co-Benefit Area Kecil 2025-2050</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Tambahan plugin untuk box plot -->
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/@sgratzl/chartjs-chart-boxplot@3.6.0/build/index.umd.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
     <div class="nav-container">
@@ -26,30 +28,27 @@
             </div>
         </nav>
     </div>
-
+    
     <div class="nav-dots">
         <div class="dot active" data-label="Home" data-target="home"></div>
         <% cases.forEach(function(item) { %>
             <div class="dot" data-label="<%= item.number %>" data-target="<%= item.id %>"></div>
         <% }); %>
     </div>
-
+    
     <section class="hero" id="home">
         <h1 class="fade-in">Analisis Co-Benefit Area Kecil</h1>
         <p class="subtitle fade-in">2025 - 2050</p>
-        <p class="fade-in">
-            Visualisasi interaktif dari 10 studi kasus berdasarkan data level 2,
-            shapefile, dan lookup untuk memahami dampak kebijakan lingkungan di area
-            kecil Inggris dan Wales.
-        </p>
+        <p class="fade-in">Visualisasi interaktif dari 10 studi kasus berdasarkan data level 2, shapefile, dan lookup untuk memahami dampak kebijakan lingkungan di area kecil Inggris dan Wales.</p>
         <div class="scroll-indicator">
             <span>Scroll untuk menjelajahi</span>
             <i class="fas fa-chevron-down"></i>
         </div>
     </section>
-
+    
     <div class="case-container">
         <% cases.forEach(function(item, index) { 
+            // Menentukan layout Zig-Zag (Genap: Teks-Kiri, Ganjil: Visual-Kiri)
             let isEven = index % 2 === 0;
             let textAnim = isEven ? 'slide-in-left' : 'slide-in-right';
             let visualAnim = isEven ? 'slide-in-right' : 'slide-in-left';
@@ -57,15 +56,32 @@
         <section class="case-section" id="<%= item.id %>">
             <div class="case-number"><%= item.number %></div>
             <h2 class="case-title"><%= item.title %></h2>
-
+            
             <div class="case-content">
+                
+                <% /* =================================================================
+                      LAYOUT GENAP (Case 1, 3, 5, 7, 9) -> Teks di Kiri, Visual di Kanan
+                   ================================================================= */ %>
                 <% if (isEven) { %>
                     <div class="case-text <%= textAnim %>">
                         <%- item.content %>
                     </div>
                     
                     <div class="case-visual <%= visualAnim %>">
-                        <% if (item.id === 'case3' && item.chartData) { %>
+                        
+                        <% if (item.id === 'case1' && item.chartData) { %>
+                            <div class="chart-wrapper" style="width: 90%; height: 90%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                <h3 style="color: #1a5276; margin-bottom: 20px;"><%= item.visualTitle %></h3>
+                                <div style="position: relative; height:150px; width:100%;">
+                                    <canvas id="case1Chart" data-value="<%= item.chartData.value %>"></canvas>
+                                </div>
+                                <div style="text-align: center; margin-top: 10px;">
+                                    <h2 style="color: #1a5276; font-size: 2rem;"><%= item.chartData.value.toFixed(1) %>%</h2>
+                                    <p style="color: #666; font-size: 0.9rem;">dari Total Co-Benefit</p>
+                                </div>
+                            </div>
+
+                        <% } else if (item.id === 'case3' && item.chartData) { %>
                             <div class="chart-wrapper" style="width: 90%; height: 90%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                                 <h3 style="color: #1a5276; margin-bottom: 10px;"><%= item.visualTitle %></h3>
                                 <div style="position: relative; height:300px; width:100%;">
@@ -78,13 +94,11 @@
                             <div class="chart-wrapper" style="width: 90%; height: 90%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                                 <h3 style="color: #1a5276; margin-bottom: 15px;"><%= item.visualTitle %></h3>
                                 <div style="position: relative; height:300px; width:100%;">
-                                    <canvas id="case5Chart" 
-                                        data-values='<%- JSON.stringify(item.chartData) %>'
-                                    ></canvas>
+                                    <canvas id="case5Chart" data-values='<%- JSON.stringify(item.chartData) %>'></canvas>
                                 </div>
                                 <p style="font-size:0.8rem; color:#666; margin-top:5px;">Statistik: Min, Q1, Median, Q3, Max</p>
                             </div>
-                        
+
                         <% } else if (item.id === 'case7' && item.chartData) { %>
                             <div class="chart-wrapper" style="width: 90%; height: 90%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                                 <h3 style="color: #c0392b; margin-bottom: 15px;"><%= item.visualTitle %></h3>
@@ -97,6 +111,13 @@
                                 <p style="font-size:0.8rem; color:#666; margin-top:5px;">Nilai dalam £ Million (Negatif = Biaya/Kerugian)</p>
                             </div>
 
+                        <% } else if (item.id === 'case9' && item.chartData) { %>
+                            <div class="chart-wrapper" style="width: 100%; height: 100%; display: flex; flex-direction: column;">
+                                <div id="case9Map" style="width: 100%; height: 100%; min-height: 400px; z-index: 1;"
+                                     data-points='<%- JSON.stringify(item.chartData) %>'>
+                                </div>
+                            </div>
+
                         <% } else { %>
                             <div class="visual-placeholder">
                                 <i class="<%= item.icon %>"></i>
@@ -106,6 +127,9 @@
                         <% } %>
                     </div>
 
+                <% /* =================================================================
+                      LAYOUT GANJIL (Case 2, 4, 6, 8, 10) -> Visual di Kiri, Teks di Kanan
+                   ================================================================= */ %>
                 <% } else { %>
                     <div class="case-visual <%= visualAnim %>">
                         
@@ -135,9 +159,7 @@
                             <div class="chart-wrapper" style="width: 90%; height: 90%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                                 <h3 style="color: #1a5276; margin-bottom: 15px;"><%= item.visualTitle %></h3>
                                 <div style="position: relative; height:300px; width:100%;">
-                                    <canvas id="case6Chart" 
-                                        data-series='<%- JSON.stringify(item.chartData) %>'
-                                    ></canvas>
+                                    <canvas id="case6Chart" data-series='<%- JSON.stringify(item.chartData) %>'></canvas>
                                 </div>
                                 <p style="font-size:0.8rem; color:#666; margin-top:5px;">Multi-Line Trend (2025-2050)</p>
                             </div>
@@ -146,9 +168,7 @@
                             <div class="chart-wrapper" style="width: 90%; height: 90%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
                                 <h3 style="color: #1a5276; margin-bottom: 15px;"><%= item.visualTitle %></h3>
                                 <div style="position: relative; height:300px; width:100%;">
-                                    <canvas id="case8Chart" 
-                                        data-slope="<%= JSON.stringify(item.chartData) %>"
-                                    ></canvas>
+                                    <canvas id="case8Chart" data-slope="<%= JSON.stringify(item.chartData) %>"></canvas>
                                 </div>
                                 <p style="font-size:0.8rem; color:#666; margin-top:5px;">Kiri: 2025 (Short Term) • Kanan: 2050 (Long Term)</p>
                             </div>
@@ -174,6 +194,7 @@
                         <% } %>
 
                     </div>
+                    
                     <div class="case-text <%= textAnim %>">
                         <%- item.content %>
                     </div>
@@ -182,7 +203,7 @@
         </section>
         <% }); %>
     </div>
-
+    
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -202,8 +223,7 @@
             <p>&copy; 2025 Analisis Co-Benefit Area Kecil.</p>
         </div>
     </footer>
-
-    <script src="/js/script.js"></script>
     
+    <script src="/js/script.js"></script>
 </body>
 </html>
