@@ -42,6 +42,50 @@
             <i class="fas fa-chevron-down"></i>
         </div>
     </section>
+
+    <div class="stats-section fade-in">
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: rgba(26, 82, 118, 0.1); color: #1a5276;">
+                    <i class="fas fa-database"></i>
+                </div>
+                <div class="stat-info">
+                    <h3><%= stats.totalData.toLocaleString() %></h3>
+                    <p>Total Data Points</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: rgba(88, 214, 141, 0.1); color: #27ae60;">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <div class="stat-info">
+                    <h3><%= stats.years %></h3>
+                    <p>Periode Analisis</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: rgba(244, 208, 63, 0.1); color: #d4ac0d;">
+                    <i class="fas fa-folder-open"></i>
+                </div>
+                <div class="stat-info">
+                    <h3><%= stats.totalCases %></h3>
+                    <p>Studi Kasus</p>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon" style="background: rgba(231, 76, 60, 0.1); color: #c0392b;">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <div class="stat-info">
+                    <h3><%= stats.region %></h3>
+                    <p>Cakupan Wilayah</p>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <div class="case-container">
         <% cases.forEach(function(item, index) { 
