@@ -60,9 +60,7 @@ module.exports = {
   // Kirim data yang sudah diproses
   chartData: chartData,
 
-  content: `
-        <p>Plot titik ini dibuat dari data nyata (sampled) yang dibaca langsung dari file JSON.</p>
-        
+  content: `        
         <div class="highlight">
             <div class="highlight-title">
                 <i class="fas fa-bullseye"></i>

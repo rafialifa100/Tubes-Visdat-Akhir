@@ -18,7 +18,7 @@ module.exports = {
                 <i class="fas fa-chart-line"></i>
                 <span>Lonjakan Manfaat</span>
             </div>
-            <p>Grafik di samping menunjukkan akumulasi manfaat moneter (£ Juta) yang tumbuh secara eksponensial seiring berjalannya waktu.</p>
+            <p>Grafik di samping menunjukkan akumulasi manfaat moneter (£ Miliar) yang tumbuh secara eksponensial seiring berjalannya waktu.</p>
         </div>
 
         <p style="margin-top: 1.5rem; font-size: 0.9rem; color: #666;">

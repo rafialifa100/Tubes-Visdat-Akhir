@@ -9,7 +9,7 @@ module.exports = {
         <p>Analisis geospasial mengidentifikasi "hotspots" atau titik panas di mana intervensi memberikan hasil maksimal. Peta di samping menyoroti 5 area teratas (Top 5 Small Areas).</p>
         <div class="highlight" style="border-left-color: #2e7d32; background-color: rgba(46, 125, 50, 0.1);">
             <div class="highlight-title" style="color: #2e7d32;"><i class="fas fa-globe-europe"></i><span>Top Performer: Ceredigion (Wales)</span></div>
-            <p>Area <strong>W01002002</strong> di Ceredigion mencatat total co-benefit tertinggi sebesar <strong>£141.9 Juta</strong>. Area lain yang signifikan meliputi Barnet, Three Rivers, Bristol, dan Tandridge.</p>
+            <p>Area di <strong> Ceredigion </strong> mencatat total co-benefit tertinggi sebesar <strong>£141.9 Juta</strong>. Area lain yang signifikan meliputi Barnet, Three Rivers, Bristol, dan Tandridge.</p>
         </div>
         <p>Informasi spasial ini krusial untuk <em>Place-Based Policy</em>, memastikan sumber daya dialokasikan ke lokasi yang paling responsif terhadap intervensi.</p>`,
     "chartData": [

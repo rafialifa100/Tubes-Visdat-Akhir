@@ -8,7 +8,7 @@ module.exports = {
     "content": `<p>Tidak semua dampak kebijakan bersifat positif. Analisis ini menyoroti <strong>Trade-Offs</strong> atau dampak negatif yang muncul dari implementasi kebijakan.</p>
         <div class="highlight" style="border-left-color: #e74c3c; background-color: rgba(231, 76, 60, 0.1);">
             <div class="highlight-title" style="color: #c0392b;"><i class="fas fa-arrow-down"></i><span>Biaya Terbesar</span></div>
-            <p><strong>Hassle Costs</strong> (Biaya kerumitan/ketidaknyamanan) menjadi faktor negatif terbesar dengan nilai kumulatif mencapai <strong>-£70.8 Juta</strong>. Ini seringkali mencakup waktu tunggu, ketidaknyamanan rute, atau biaya transisi teknologi.</p>
+            <p><strong>Hassle Costs</strong> (Biaya kerumitan/ketidaknyamanan) menjadi faktor negatif terbesar dengan nilai kumulatif mencapai <strong>-£70.8 Miliar</strong>. Ini seringkali mencakup waktu tunggu, ketidaknyamanan rute, atau biaya transisi teknologi.</p>
         </div>
         <p>Identifikasi dampak negatif ini krusial untuk mitigasi risiko dan merancang skema kompensasi agar kebijakan tetap diterima masyarakat.</p>`,
     "chartData": {
