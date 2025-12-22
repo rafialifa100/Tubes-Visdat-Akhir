@@ -33,6 +33,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ... kode observer dan navigasi yang sudah ada ...
 
+  const case1Canvas = document.getElementById('case1Chart');
+    if (case1Canvas) {
+        const airVal = parseFloat(case1Canvas.dataset.air);
+        const otherVal = parseFloat(case1Canvas.dataset.others);
+
+        new Chart(case1Canvas, {
+            type: 'doughnut',
+            data: {
+                labels: ['Air Quality', 'Other Benefits'],
+                datasets: [{
+                    data: [airVal, otherVal],
+                    backgroundColor: ['#2ecc71', '#dfe6e9'], // Hijau & Abu-abu (Sama dengan Python)
+                    borderWidth: 2,
+                    hoverOffset: 10,
+                    offset: [20, 0] // Membuat efek 'explode' pada bagian hijau
+                }]
+            },
+            options: {
+                cutout: '70%', // Membuat lubang tengah (Donut)
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { boxWidth: 12, padding: 20 }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: (item) => ` £${item.raw.toLocaleString()}`
+                        }
+                    }
+                },
+                maintainAspectRatio: false,
+                responsive: true
+            }
+        });
+    }
   // --- LOGIKA KHUSUS CASE 2 (CHART.JS) ---
   const case2Canvas = document.getElementById("case2Chart");
   if (case2Canvas && typeof Chart !== "undefined") {
@@ -175,13 +210,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     label: 'Total Value (£ Million)',
                     data: values,
                     backgroundColor: [
-                        '#1a5276', // Juara 1 (Gelap)
-                        '#2980b9',
-                        '#3498db',
-                        '#5dade2',
-                        '#85c1e9',
-                        '#aed6f1'  // Juara 6 (Terang)
+                        '#2ECC71', // Hijau cerah
+                        '#58D68D', // Hijau muda
+                        '#F1C40F', // Kuning cerah
+                        '#F39C12', // Oranye cerah
+                        '#9B59B6', // Ungu lembut
+                        '#5DADE2'  // Biru cerah
                     ],
+
+
                     borderColor: '#154360',
                     borderWidth: 1
                 }]

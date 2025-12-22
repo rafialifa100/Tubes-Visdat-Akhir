@@ -75,7 +75,7 @@ module.exports = {
             Ukuran titik merepresentasikan jumlah rumah tangga. Pola "awan" yang naik ke kanan atas menunjukkan bahwa kebijakan ini secara efektif menargetkan pusat-pusat populasi dimana intervensi paling dibutuhkan.
         </p>
         <p style="font-size: 0.8rem; color: #888; margin-top: 10px;">
-            *Menampilkan 800 sampel titik data dari total ${allPoints.length.toLocaleString()} area untuk performa optimal.
+            *Menampilkan 2000 sampel titik data dari total ${allPoints.length.toLocaleString()} area untuk performa optimal.
         </p>
     `,
 };

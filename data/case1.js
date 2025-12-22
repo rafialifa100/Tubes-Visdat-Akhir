@@ -9,6 +9,11 @@ module.exports = {
   // Update bagian visual title sesuai data Python
   visualTitle: "Progress Udara Bersih",
   visualDesc: "Total Benefit: £48,259.41",
+  chartData: {
+    airQuality: 48259.41,
+    otherBenefits: 242456.20, 
+    percentage: 16.6
+  },
 
   content: `
         <p>Analisis terbaru menunjukkan total manfaat kualitas udara yang signifikan.</p>
@@ -22,19 +27,6 @@ module.exports = {
                 £48,259.41
             </p>
             <p style="font-size: 0.9rem; opacity: 0.8;">Akumulasi manfaat moneter hingga tahun 2050.</p>
-        </div>
-
-        <div style="margin-top: 2rem;">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                <strong>Progress to 2050</strong>
-                <strong>16.6%</strong>
-            </div>
-            <div class="progress-container">
-                <div class="progress-bar" style="width: 16.6%;"></div>
-            </div>
-            <p style="font-size: 0.8rem; color: #666; margin-top: 5px;">
-                Persentase kontribusi terhadap total co-benefit.
-            </p>
         </div>
 
         <p style="margin-top: 1.5rem;">
